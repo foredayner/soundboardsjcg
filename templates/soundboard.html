@@ -1,0 +1,40 @@
+<div class="sb-container">
+  {{#if isGM}}
+  <div class="sb-toolbar">
+    <button id="sb-add-btn" title="버튼 추가"><i class="fas fa-plus"></i> 추가</button>
+  </div>
+  {{/if}}
+
+  {{#if buttons.length}}
+  <div class="sb-grid">
+    {{#each buttons}}
+    <div class="sb-item">
+      <button
+        class="sb-play-btn"
+        data-src="{{src}}"
+        data-volume="{{volume}}"
+        style="background-color: {{color}};"
+        title="{{src}}"
+      >
+        <i class="fas fa-volume-up"></i>
+        <span>{{label}}</span>
+      </button>
+      {{#if ../isGM}}
+      <div class="sb-controls">
+        <button class="sb-edit-btn" data-idx="{{@index}}" title="편집"><i class="fas fa-pen"></i></button>
+        <button class="sb-delete-btn" data-idx="{{@index}}" title="삭제"><i class="fas fa-trash"></i></button>
+      </div>
+      {{/if}}
+    </div>
+    {{/each}}
+  </div>
+  {{else}}
+  <p class="sb-empty">
+    {{#if isGM}}
+      [추가] 버튼으로 사운드를 등록하세요.
+    {{else}}
+      등록된 사운드가 없습니다.
+    {{/if}}
+  </p>
+  {{/if}}
+</div>

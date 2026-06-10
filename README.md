@@ -1,96 +1,135 @@
 # SoundboardJCG
 
-FoundryVTT용 사운드보드 모듈입니다.  
-GM이 등록한 사운드를 플레이어도 재생할 수 있으며, 재생 중인 사운드를 실시간으로 모든 참가자와 동기화합니다.
+[![FoundryVTT](https://img.shields.io/badge/FoundryVTT-v12%2B-informational)](https://foundryvtt.com)
+[![Latest Release](https://img.shields.io/github/v/release/foredayner/soundboardsjcg)](https://github.com/foredayner/soundboardsjcg/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+A soundboard module for [Foundry Virtual Tabletop](https://foundryvtt.com).  
+The GM places audio files in the module's `sounds/` folder, and all players can see and play them. Playback is synchronized across all connected clients in real time.
 
 ---
 
-## 기능
+## Features
 
-- **자동 버튼 생성** — `modules/soundboardsJCG/sounds/` 폴더의 오디오 파일을 자동으로 버튼으로 표시
-- **하위 폴더 지원** — 헤더의 ▽ 버튼으로 하위 폴더 간 전환 가능
-- **검색** — 버튼 이름으로 실시간 필터링
-- **재생 동기화** — 누구든 버튼을 누르면 모든 참가자에게 동시 재생
-- **재생 중 리스트** — 우측 사이드바에 재생 중인 사운드 목록, 진행 게이지, 남은 시간 표시
-- **개별 정지** — 재생 중 리스트의 ✕ 버튼으로 모든 참가자 동시 정지
-- **전체 정지** — 우클릭 메뉴에서 전체 사운드 일괄 정지
-- **마스터 볼륨** — 사이드바 하단 슬라이더로 내 클라이언트 전체 볼륨 조절 (다른 참가자에게 영향 없음)
-- **우클릭 상세 메뉴** — 개별 볼륨, 이름 변경, 길이 확인, 단독 재생 (드래그 이동 가능)
-- **씬 Note 배치** — GM이 씬에 사운드보드 Note를 배치하면 플레이어도 클릭으로 오픈 가능
-- **플레이어 지원** — GM 접속 시 파일 목록을 캐시로 공유, 플레이어도 동일한 사운드보드 사용
+- **Auto-generated buttons** — Audio files in `modules/soundboardsjcg/sounds/` are automatically turned into playback buttons
+- **Subfolder navigation** — Switch between subfolders using the ▽ dropdown in the header
+- **Search** — Filter buttons by name in real time
+- **Synchronized playback** — Anyone pressing a button plays the sound for all connected clients simultaneously
+- **Now Playing sidebar** — Shows currently playing sounds with a progress bar, time remaining, and a stop button
+- **Global stop** — Stop all sounds at once via the right-click context menu
+- **Master volume** — A per-client volume slider at the bottom of the sidebar; does not affect other clients
+- **Right-click context menu** — Adjust individual volume (applied instantly), rename buttons (GM only), view file duration, play exclusively, or stop all. Draggable window
+- **Scene Note support** — GM can place a Note on the scene; all players can click it to open the soundboard
+- **Player support** — File list is cached by the GM and shared with players via World Settings
 
 ---
 
-## 설치
+## Installation
 
-1. 이 저장소를 다운로드하거나 ZIP으로 압축
-2. FoundryVTT 데이터 폴더의 `modules/` 안에 `soundboardsJCG/` 폴더째로 복사
-3. FoundryVTT 재시작
-4. **게임 설정 → 모듈 관리**에서 `SoundboardJCG` 활성화
+### Manual
+1. Download the [latest release](https://github.com/foredayner/soundboardsjcg/releases/latest) ZIP
+2. Extract and place the `soundboardsjcg/` folder inside your FoundryVTT `Data/modules/` directory
+3. Restart FoundryVTT and enable **SoundboardJCG** in **Manage Modules**
 
+### Via Manifest URL
+Paste the following URL into FoundryVTT's **Install Module** dialog:
 ```
-modules/
-└── soundboardsJCG/
-    ├── module.json
-    ├── scripts/
-    │   └── soundboard.js
-    ├── styles/
-    │   └── soundboard.css
-    ├── sounds/         ← 오디오 파일을 여기에 넣으세요
-    │   ├── 효과음.mp3
-    │   └── 분위기/
-    │       └── 빗소리.ogg
-    └── macros/
-        └── create-soundboard-note.js
+https://github.com/foredayner/soundboardsjcg/releases/latest/download/module.json
 ```
 
 ---
 
-## 사용법
+## Setup
 
-### 사운드 파일 등록
-`modules/soundboardsJCG/sounds/` 폴더에 오디오 파일을 넣으면 자동으로 버튼이 생성됩니다.  
-지원 형식: `mp3`, `wav`, `ogg`, `oga`, `flac`, `webm`
+### Adding sounds
+Place audio files inside `modules/soundboardsjcg/sounds/`. Subfolders are supported.
 
-### 사운드보드 열기
-씬 진입 후 왼쪽 툴바 → **Ambient Sounds** 그룹 → ⊞ 아이콘 클릭
+```
+soundboardsjcg/
+└── sounds/
+    ├── gunshot.mp3
+    ├── rain.ogg
+    └── battle/
+        └── explosion.wav
+```
 
-### 씬에 Note 배치 (플레이어용)
-1. FoundryVTT 매크로 창에서 새 매크로 생성
-2. `macros/create-soundboard-note.js` 내용을 붙여넣고 실행
-3. 씬에 🔊 Note가 생성됨 — GM/플레이어 모두 클릭하면 사운드보드 오픈
+Supported formats: `mp3`, `wav`, `ogg`, `oga`, `flac`, `webm`
 
-### 우클릭 메뉴
-사운드 버튼 또는 재생 중 항목을 우클릭하면:
-- 파일 길이 확인
-- 볼륨 조절 (즉시 적용)
-- 버튼 이름 변경 (GM만)
-- 단독 재생 (다른 사운드 끄고 재생)
-- 전체 정지
+### Opening the soundboard
+Enter a scene → left toolbar → **Ambient Sounds** group → ⊞ icon
+
+### Placing a Scene Note (for players)
+1. Create a new macro in FoundryVTT
+2. Paste the contents of `macros/create-soundboard-note.js` and run it
+3. A 🔊 Note is created at the center of the scene — clicking it opens the soundboard for GM and players alike
 
 ---
 
-## 호환성
+## Usage
 
-| FoundryVTT | 지원 |
+| Action | How |
 |---|---|
-| V14 | ✅ 검증됨 |
-| V13 | ✅ 호환 |
-| V12 | ✅ 호환 |
+| Play a sound | Left-click a button |
+| Open context menu | Right-click a button or a Now Playing item |
+| Stop a specific sound | Click ✕ in the Now Playing sidebar |
+| Stop all sounds | Right-click → "Stop All" |
+| Adjust master volume | Drag the slider at the bottom of the sidebar |
+| Change button name | Right-click → edit name field (GM only) |
+| Switch folder | Click ▽ in the header |
+| Refresh file list | Click 🔄 in the header |
 
 ---
 
-## 파일 구조
+## Compatibility
+
+| FoundryVTT | Status |
+|---|---|
+| V14 | ✅ Verified |
+| V13 | ✅ Compatible |
+| V12 | ✅ Compatible |
+
+---
+
+## File Structure
 
 ```
-scripts/soundboard.js   메인 로직
-styles/soundboard.css   스타일
-macros/                 유틸리티 매크로
-sounds/                 오디오 파일 저장 위치 (직접 생성)
+soundboardsjcg/
+├── module.json
+├── scripts/
+│   └── soundboard.js
+├── styles/
+│   └── soundboard.css
+├── lang/
+│   └── ko.json
+├── macros/
+│   └── create-soundboard-note.js
+├── sounds/              ← Place your audio files here
+└── README.md
 ```
 
 ---
 
-## 라이선스
+## Changelog
 
-MIT License
+### 1.2.0
+- Player support via GM file cache (World Settings)
+- Scene Note integration for players
+- Master volume slider (per-client)
+- Draggable right-click context menu
+- Socket-based playback and Now Playing sync across all clients
+- Stop button propagates to all clients
+
+### 1.1.0
+- Right-click context menu (volume, rename, exclusive play)
+- Now Playing sidebar with progress bar and time remaining
+- Search/filter
+- Subfolder navigation
+
+### 1.0.0
+- Initial release
+
+---
+
+## License
+
+[MIT](LICENSE)

@@ -1,14 +1,31 @@
 {
-  "id": "soundboardsJCG",
+  "id": "soundboardsjcg",
   "title": "SoundboardJCG",
-  "description": "KP 전용 사운드보드. 버튼 추가/삭제는 GM만, 재생은 모두 가능.",
+  "description": "A soundboard module for FoundryVTT. GM registers sounds, and all players can play them. Playback is synchronized across all clients in real time.",
   "version": "1.2.0",
   "socket": true,
   "compatibility": {
     "minimum": "12",
     "verified": "14"
   },
-  "authors": [{ "name": "Custom" }],
+  "authors": [
+    {
+      "name": "foredayner",
+      "url": "https://github.com/foredayner"
+    }
+  ],
+  "url": "https://github.com/foredayner/soundboardsjcg",
+  "readme": "https://github.com/foredayner/soundboardsjcg/blob/main/README.md",
+  "bugs": "https://github.com/foredayner/soundboardsjcg/issues",
+  "manifest": "https://github.com/foredayner/soundboardsjcg/releases/latest/download/module.json",
+  "download": "https://github.com/foredayner/soundboardsjcg/releases/latest/download/soundboardsjcg.zip",
   "esmodules": ["scripts/soundboard.js"],
-  "styles": ["styles/soundboard.css"]
+  "styles": ["styles/soundboard.css"],
+  "languages": [
+    {
+      "lang": "ko",
+      "name": "한국어",
+      "path": "lang/ko.json"
+    }
+  ]
 }
