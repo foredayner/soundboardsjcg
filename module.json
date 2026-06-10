@@ -1,0 +1,14 @@
+{
+  "id": "soundboardsJCG",
+  "title": "SoundboardJCG",
+  "description": "KP 전용 사운드보드. 버튼 추가/삭제는 GM만, 재생은 모두 가능.",
+  "version": "1.2.0",
+  "socket": true,
+  "compatibility": {
+    "minimum": "12",
+    "verified": "14"
+  },
+  "authors": [{ "name": "Custom" }],
+  "esmodules": ["scripts/soundboard.js"],
+  "styles": ["styles/soundboard.css"]
+}
